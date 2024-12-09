@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+  <title>Avaliação Acedata</title>
+
+  <style>
+    .tabs {
+      display: flex;
+      cursor: pointer;
+      padding: 10px 0;
+      margin-bottom: 48px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      color: #fff;
+      padding: 10px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      border-bottom: 2px solid aqua;
+      font-weight: bold;
+    }
+
+    .tab-content {
+      display: none;
+      color: gainsboro;
+    }
+
+    .tab-content.active {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+    }
+  </style>
+</head>
+<body style="background-color: rgb(48, 47, 47); color: gainsboro; display: flex; flex-direction: column; align-items: center; font-family: Inter, sans-serif;">
+  <div class="tabs">
+    <div class="tab active" data-tab="1">Cálculo de Horistas</div>
+    <div class="tab" data-tab="2">Sequência de Números</div>
+    <div class="tab" data-tab="3">Fibonacci</div>
+  </div>
+
+  <div id="tab-content-1" class="tab-content active">
+    <form style="display: flex; flex-direction: column; width: 50%; gap: 24px;">
+
+      <div class="inputContainer">    
+        <label for="salario">Valor do salário/h</label>
+        <input type="text" name="salario" id="salario" placeholder="R$ 0,00">
+      </div>
+
+      <div class="inputContainer">    
+        <label for="salario">Horas trabalhadas</label>
+        <input type="number" name="horas" id="horas" placeholder="Insira as horas trabalhadas" min="0">
+      </div>
+
+      <div class="inputContainer">    
+        <label for="salario">Filhos menores de 14 anos</label>
+        <input type="number" name="filhos" id="filhos" placeholder="Insira o nº de filhos" min="0">
+      </div>
+      
+      <button type="button" id="capturar">Calcular</button>      
+    </form>    
+
+    <p id="resultado1"></p>
+    <span id="error-message1" class="hidden"></span>  
+  </div>
+
+  <div id="tab-content-2" class="tab-content">
+    <form style="display: flex; flex-direction: column; width: 50%; gap: 24px;">
+      <p>Digite a quantidade de números e, em seguida, insira os números separados por vírgula.</p>
+    
+      <label for="quantidade">Quantidade de números:</label>
+      <input type="number" id="quantidade" placeholder="Digite a quantidade" min="1">
+
+      <label for="sequencia">Sequência de números:</label>
+      <input type="text" id="sequencia" placeholder="Ex: 10, 20, 5, 30">
+
+      <button type="button" id="calcular">Calcular</button>
+    </form>
+
+    <p id="resultado2"></p>
+    <span id="error-message2" class="hidden"></span>  
+  </div>
+
+  <div id="tab-content-3" class="tab-content">
+    <div>
+      <label for="n">Digite um número (N):</label>
+      <input type="number" id="n" placeholder="Ex: 5" min="1">
+      <button type="button" id="gerar">Gerar</button>
+    </div>    
+
+    <p id="resultado3"></p>
+    <span id="error-message3" class="hidden"></span>  
+  </div>
+
+  <script src="script.js" defer></script>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+
+        tabs.forEach(t => t.classList.remove('active'))
+        tabContents.forEach(content => content.classList.remove('active'))
+
+        tab.classList.add('active')
+        document.getElementById(`tab-content-${tab.dataset.tab}`).classList.add('active')
+
+        const tabIndex = tab.dataset.tab
+        const sequenciaInput = document.getElementById(`sequencia${tabIndex}`)
+        const quantidadeInput = document.getElementById(`quantidade${tabIndex}`)
+        const resultado = document.getElementById(`resultado${tabIndex}`)
+
+        if (quantidadeInput.value || sequenciaInput.value) {
+          resultado.innerHTML = ''
+        }
+      })
+    })
+  </script>
+</body>
+</html>
